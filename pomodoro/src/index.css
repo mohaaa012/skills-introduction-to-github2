@@ -1,0 +1,136 @@
+@import 'tailwindcss';
+
+/*
+ * Warm Tech design tokens.
+ * Tailwind v4 reads its configuration from this @theme block: every
+ * --color-* token becomes a utility (bg-terracotta, text-sage, ring-amber-soft…)
+ * and supports opacity modifiers (bg-terracotta/10).
+ */
+@theme {
+  /* Palette */
+  --color-clay: #f7f4ef; /* Background — Soft Clay Cream */
+  --color-ivory: #ffffff; /* Surface / cards — Pure Ivory White */
+  --color-terracotta: #c86d51; /* Primary / Focus — Burnt Terracotta */
+  --color-sage: #587b6a; /* Secondary / Rest — Muted Sage Green */
+  --color-amber-soft: #e6a15c; /* Accent / Achievements — Soft Amber */
+  --color-charcoal: #2c2a29; /* Text / Headings — Deep Charcoal */
+
+  /* A few hand-mixed companions for borders and quiet text */
+  --color-sand: #ebe5dc;
+  --color-pebble: #8a837c;
+  --color-terracotta-deep: #a95a42;
+  --color-sage-deep: #48685a;
+  --color-amber-deep: #a3662b;
+
+  /* No pure black anywhere: even an accidental text-black stays warm. */
+  --color-black: #2c2a29;
+
+  /* Type */
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+  /* Fraunces' SOFT axis rounds every terminal — the "warm" in Warm Tech */
+  --font-display--font-variation-settings: 'SOFT' 100;
+
+  /* Shadows tinted with charcoal instead of grey-blue */
+  --shadow-sm: 0 1px 2px rgb(44 42 41 / 0.04), 0 4px 14px -6px rgb(44 42 41 / 0.08);
+  --shadow-md: 0 2px 4px rgb(44 42 41 / 0.04), 0 12px 32px -12px rgb(44 42 41 / 0.14);
+  --shadow-lg: 0 4px 8px rgb(44 42 41 / 0.05), 0 24px 60px -20px rgb(44 42 41 / 0.22);
+
+  /* Slow, organic easing */
+  --ease-organic: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-clay);
+    color: var(--color-charcoal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-clay);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: rgb(230 161 92 / 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(200 109 81 / 0.55);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .card {
+    border-radius: var(--radius-3xl);
+    background-color: var(--color-ivory);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgb(235 229 220 / 0.7);
+  }
+
+  /* Paper grain that keeps flat colour from feeling digital */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Soft, pebble-like range slider */
+  .soft-range {
+    --range-color: var(--color-sage);
+    --range-fill: 50%;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--range-color) 0 var(--range-fill),
+      var(--color-sand) var(--range-fill) 100%
+    );
+    cursor: pointer;
+  }
+  .soft-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--color-ivory);
+    border: 2px solid var(--range-color);
+    box-shadow: 0 2px 6px rgb(44 42 41 / 0.15);
+    transition: transform 200ms var(--ease-organic);
+  }
+  .soft-range::-webkit-slider-thumb:hover {
+    transform: scale(1.12);
+  }
+  .soft-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--color-ivory);
+    border: 2px solid var(--range-color);
+    box-shadow: 0 2px 6px rgb(44 42 41 / 0.15);
+  }
+  .soft-range:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
