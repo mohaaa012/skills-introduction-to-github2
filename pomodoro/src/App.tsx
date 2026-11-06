@@ -153,7 +153,11 @@ export default function App() {
           </main>
 
           <footer className="mt-10 pb-4 text-center text-xs text-pebble">
-            Your progress lives only in this browser. Press <kbd className="rounded bg-sand/70 px-1.5 py-0.5 font-sans">Space</kbd> to start or pause. Be kind to yourself.
+            Your progress stays on this device.{' '}
+            <span className="pointer-coarse:hidden">
+              Press <kbd className="rounded bg-sand/70 px-1.5 py-0.5 font-sans">Space</kbd> to start or pause.{' '}
+            </span>
+            Be kind to yourself.
           </footer>
         </div>
 

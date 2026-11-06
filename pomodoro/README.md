@@ -18,7 +18,26 @@ npm run dev        # http://localhost:5173
 | `npm test`        | Runs the unit tests (Vitest)                   |
 | `npm run lint`    | Lints the code (Oxlint)                        |
 
-There's no backend. All progress is stored in `localStorage` under keys that start with `hearth:`.
+There’s no backend. All progress is stored on the device in `localStorage` under keys that start with `hearth:`.
+
+## Android app (APK)
+
+The same web app is wrapped as a native Android app with [Capacitor](https://capacitorjs.com). The Android project lives in `android/`.
+
+You need JDK 21 and the Android SDK (platform `android-36`, build-tools `35.0.0`) with `ANDROID_HOME` set, or Android Studio.
+
+```bash
+npm run android:apk
+# → android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+`npm run android:sync` copies a fresh web build into the Android project. You can also open `android/` in Android Studio to run the app on a device.
+
+Some details:
+- **Package:** `com.mohaaa012.hearth`, for Android 7.0 (API 24) and newer.
+- **Look:** clay-cream launch screen, an adaptive launcher icon and a monochrome themed icon (Android 13+).
+- **Signing:** debug builds are signed with that machine's debug key. Installing a build signed with a different key requires uninstalling the app first, which also clears its saved progress. A release keystore fixes this.
+- **Background:** Android pauses the WebView in the background. The timer keeps the correct time, but the end chime only plays once the app is open again.
 
 ## Stack
 

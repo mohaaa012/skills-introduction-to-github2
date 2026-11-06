@@ -46,6 +46,8 @@
     color: var(--color-charcoal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Feels like an app on touch screens: no grey flash on tap */
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
